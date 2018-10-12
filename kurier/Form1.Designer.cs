@@ -49,6 +49,7 @@
             // 
             // cbDatabaseName
             // 
+            this.cbDatabaseName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDatabaseName.FormattingEnabled = true;
             this.cbDatabaseName.Location = new System.Drawing.Point(89, 10);
             this.cbDatabaseName.Name = "cbDatabaseName";

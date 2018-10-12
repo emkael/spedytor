@@ -61,6 +61,12 @@ namespace kurier
             return "";
         }
 
+        public MySqlDataReader select(string query)
+        {
+            MySqlCommand comm = new MySqlCommand(query, conn);
+            return comm.ExecuteReader();
+        }
+
         public static string getHost() { return Properties.Settings.Default.HOST; }
         public static string getUser() { return Properties.Settings.Default.USER; }
         public static string getPass() { return Properties.Settings.Default.PASS; }
