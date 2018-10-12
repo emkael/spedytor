@@ -92,6 +92,7 @@
             this.bSettings.Size = new System.Drawing.Size(70, 70);
             this.bSettings.TabIndex = 5;
             this.bSettings.UseVisualStyleBackColor = true;
+            this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
             // 
             // bSave
             // 
@@ -119,6 +120,7 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "KurierSQL";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
