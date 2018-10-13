@@ -103,6 +103,7 @@
             this.bSave.Size = new System.Drawing.Size(140, 140);
             this.bSave.TabIndex = 4;
             this.bSave.UseVisualStyleBackColor = true;
+            this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
             // Form1
             // 

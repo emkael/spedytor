@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace kurier
 {
@@ -50,6 +51,26 @@ namespace kurier
             }
             this.cbDatabaseName.SelectedIndex = 0;
             dbs.Close();
+        }
+
+        private void bSave_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fd = new FolderBrowserDialog();
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = Path.Combine(fd.SelectedPath, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
+                try
+                {
+                    MySQL c = new MySQL(this.cbDatabaseName.SelectedItem.ToString());
+                    c.backup(filePath);
+                    c.close();
+                    MessageBox.Show("Wyeksportowano pomyślnie do pliku: " + filePath, "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Błąd eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ namespace kurier
     public class MySQL
     {
         private MySqlConnection conn;
+        private MySqlCommand cmd;
         private string database;
 
         public MySQL(string database)
@@ -72,5 +73,14 @@ namespace kurier
         public static string getPass() { return Properties.Settings.Default.PASS; }
         public static string getPort() { return Properties.Settings.Default.PORT; }
         public static bool getConfigured() { return Properties.Settings.Default.CONFIGURED; }
+
+        internal void backup(string filePath)
+        {
+            cmd = new MySqlCommand();
+            cmd.Connection = conn;
+            MySqlBackup backup = new MySqlBackup(cmd);
+            backup.ExportInfo.AddCreateDatabase = true;
+            backup.ExportToFile(filePath);
+        }
     }
 }

@@ -54,7 +54,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\res\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="MySqlBackup">
+      <HintPath>..\res\MySqlBackup.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
