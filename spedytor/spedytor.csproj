@@ -8,8 +8,8 @@
     <ProjectGuid>{799D7BE1-4C53-4B14-9798-E0EE47451417}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>kurier</RootNamespace>
-    <AssemblyName>kurier</AssemblyName>
+    <RootNamespace>spedytor</RootNamespace>
+    <AssemblyName>spedytor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

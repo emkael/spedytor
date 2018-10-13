@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kurier", "kurier\kurier.csproj", "{799D7BE1-4C53-4B14-9798-E0EE47451417}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spedytor", "spedytor\spedytor.csproj", "{799D7BE1-4C53-4B14-9798-E0EE47451417}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-﻿namespace kurier
+﻿namespace spedytor
 {
     partial class MysqlSettings
     {

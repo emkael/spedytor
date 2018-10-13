@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
 
-namespace kurier
+namespace spedytor
 {
     public partial class Form1 : Form
     {

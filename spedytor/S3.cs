@@ -7,7 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using Amazon;
 
-namespace kurier
+namespace spedytor
 {
     class S3
     {

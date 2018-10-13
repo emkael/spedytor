@@ -1,4 +1,4 @@
-﻿namespace kurier
+﻿namespace spedytor
 {
     partial class Form1
     {
@@ -78,7 +78,7 @@
             // 
             // bExit
             // 
-            this.bExit.Image = global::kurier.Properties.Resources.close;
+            this.bExit.Image = global::spedytor.Properties.Resources.close;
             this.bExit.Location = new System.Drawing.Point(152, 133);
             this.bExit.Name = "bExit";
             this.bExit.Size = new System.Drawing.Size(70, 70);
@@ -88,7 +88,7 @@
             // 
             // bSettings
             // 
-            this.bSettings.Image = global::kurier.Properties.Resources.settings;
+            this.bSettings.Image = global::spedytor.Properties.Resources.settings;
             this.bSettings.Location = new System.Drawing.Point(152, 63);
             this.bSettings.Name = "bSettings";
             this.bSettings.Size = new System.Drawing.Size(70, 70);
@@ -98,7 +98,7 @@
             // 
             // bSave
             // 
-            this.bSave.Image = global::kurier.Properties.Resources.save;
+            this.bSave.Image = global::spedytor.Properties.Resources.save;
             this.bSave.Location = new System.Drawing.Point(12, 63);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(140, 140);
@@ -122,7 +122,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Text = "KurierSQL";
+            this.Text = "Spedytor";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
