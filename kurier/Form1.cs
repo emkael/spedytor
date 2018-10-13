@@ -25,6 +25,10 @@ namespace kurier
         private void cSend_CheckedChanged(object sender, EventArgs e)
         {
             this.tBucketID.Enabled = this.cSend.Checked;
+            if (this.cSend.Checked)
+            {
+                this.tBucketID.Focus();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -55,6 +59,8 @@ namespace kurier
 
         private void bSave_Click(object sender, EventArgs e)
         {
+            this.Enabled = false;
+            Cursor.Current = Cursors.WaitCursor;
             FolderBrowserDialog fd = new FolderBrowserDialog();
             if (fd.ShowDialog() == DialogResult.OK)
             {
@@ -65,11 +71,33 @@ namespace kurier
                     c.backup(filePath);
                     c.close();
                     MessageBox.Show("Wyeksportowano pomyślnie do pliku: " + filePath, "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (cSend.Checked) {
+                        if (tBucketID.Text.Length > 0)
+                        {
+                            S3 s3Client = new S3();
+                            s3Client.send(this.tBucketID.Text, filePath, this.cbDatabaseName.SelectedItem.ToString() + ".sql");
+                            MessageBox.Show("Wysłano Zimnemu!", "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie wpisałeś ID do wysłania Zimnemu!", "Błąd eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Błąd eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            this.Enabled = true;
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void tBucketID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                this.bSave_Click(null, null);
             }
         }
     }

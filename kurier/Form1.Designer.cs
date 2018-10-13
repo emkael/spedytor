@@ -74,6 +74,7 @@
             this.tBucketID.Name = "tBucketID";
             this.tBucketID.Size = new System.Drawing.Size(138, 20);
             this.tBucketID.TabIndex = 3;
+            this.tBucketID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBucketID_KeyPress);
             // 
             // bExit
             // 
