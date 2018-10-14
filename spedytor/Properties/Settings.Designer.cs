@@ -82,5 +82,17 @@ namespace spedytor.Properties {
                 this["CONFIGURED"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string S3_BUCKET {
+            get {
+                return ((string)(this["S3_BUCKET"]));
+            }
+            set {
+                this["S3_BUCKET"] = value;
+            }
+        }
     }
 }

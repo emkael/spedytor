@@ -19,7 +19,7 @@ namespace spedytor
 
         private void bExit_Click(object sender, EventArgs e)
         {
-            this.Dispose();
+            this.Close();
         }
 
         private void cSend_CheckedChanged(object sender, EventArgs e)
@@ -36,6 +36,7 @@ namespace spedytor
             if (!MySQL.getConfigured()) (new MysqlSettings()).ShowDialog();
             if (!MySQL.getConfigured()) this.Dispose();
             this.refreshDatabaseList();
+            this.tBucketID.Text = Properties.Settings.Default.S3_BUCKET;
         }
 
         private void bSettings_Click(object sender, EventArgs e)
@@ -99,6 +100,12 @@ namespace spedytor
             {
                 this.bSave_Click(null, null);
             }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.S3_BUCKET = this.tBucketID.Text;
+            Properties.Settings.Default.Save();
         }
     }
 }
