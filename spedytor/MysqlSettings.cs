@@ -21,6 +21,8 @@ namespace spedytor
             eUser.Text = Properties.Settings.Default.USER;
             ePass.Text = Properties.Settings.Default.PASS;
             ePort.Text = Properties.Settings.Default.PORT;
+            eS3ID.Text = Properties.S3Settings.Default.AWS_ACCESS_KEY;
+            eS3Key.Text = Properties.S3Settings.Default.AWS_SECRET_KEY;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -29,6 +31,9 @@ namespace spedytor
             Properties.Settings.Default.USER = eUser.Text;
             Properties.Settings.Default.PASS = ePass.Text;
             Properties.Settings.Default.PORT = ePort.Text;
+            Properties.S3Settings.Default.AWS_ACCESS_KEY = eS3ID.Text;
+            Properties.S3Settings.Default.AWS_SECRET_KEY = eS3Key.Text;
+            Properties.S3Settings.Default.Save();
 
             string msg = MySQL.test();
             if (msg == "")
@@ -39,7 +44,7 @@ namespace spedytor
             }
             else
             {
-                MessageBox.Show(msg, "Nieprawidłowe ustawienia", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(msg, "Nieprawidłowe ustawienia MySQL", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
     }

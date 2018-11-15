@@ -37,12 +37,23 @@ namespace spedytor
             if (!MySQL.getConfigured()) this.Dispose();
             this.refreshDatabaseList();
             this.tBucketID.Text = Properties.Settings.Default.S3_BUCKET;
+            this.checkS3Options();
+        }
+
+        private void checkS3Options()
+        {
+            cSend.Enabled = (Properties.S3Settings.Default.AWS_ACCESS_KEY.Length > 0 && Properties.S3Settings.Default.AWS_SECRET_KEY.Length > 0);
+            if (!cSend.Enabled)
+            {
+                cSend.Checked = false;
+            }
         }
 
         private void bSettings_Click(object sender, EventArgs e)
         {
             (new MysqlSettings()).ShowDialog();
             this.refreshDatabaseList();
+            this.checkS3Options();
         }
 
         internal void refreshDatabaseList()
