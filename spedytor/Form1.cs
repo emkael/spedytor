@@ -22,15 +22,6 @@ namespace spedytor
             this.Close();
         }
 
-        private void cSend_CheckedChanged(object sender, EventArgs e)
-        {
-            this.tBucketID.Enabled = this.cSend.Checked;
-            if (this.cSend.Checked)
-            {
-                this.tBucketID.Focus();
-            }
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             if (!MySQL.getConfigured()) (new MysqlSettings()).ShowDialog();
@@ -70,6 +61,15 @@ namespace spedytor
             dbs.Close();
         }
 
+        private string getBucketID()
+        {
+            if (this.cSend.Checked && spedytor.Properties.S3Settings.Default.AWS_BUCKET_ID.Length > 0)
+            {
+                return spedytor.Properties.S3Settings.Default.AWS_BUCKET_ID;
+            }
+            return null;
+        }
+
         private void bSave_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
@@ -85,10 +85,10 @@ namespace spedytor
                     c.close();
                     MessageBox.Show("Wyeksportowano pomyślnie do pliku: " + filePath, "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (cSend.Checked) {
-                        if (tBucketID.Text.Length > 0)
+                        if (this.getBucketID() != null)
                         {
                             S3 s3Client = new S3();
-                            s3Client.send(this.tBucketID.Text, filePath, this.cbDatabaseName.SelectedItem.ToString() + ".sql");
+                            s3Client.send(this.getBucketID(), filePath, this.cbDatabaseName.SelectedItem.ToString() + ".sql");
                             MessageBox.Show("Wysłano Zimnemu!", "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
@@ -106,13 +106,12 @@ namespace spedytor
             Cursor.Current = Cursors.Default;
         }
 
-        private void tBucketID_KeyPress(object sender, KeyPressEventArgs e)
+        private void bTimer_Click(object sender, EventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Return)
-            {
-                this.bSave_Click(null, null);
-            }
         }
 
+        private void tInterval_Tick(object sender, EventArgs e)
+        {
+        }
     }
 }
