@@ -72,46 +72,88 @@ namespace spedytor
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            this.Enabled = false;
-            Cursor.Current = Cursors.WaitCursor;
+            this.setControlState(false, null);
             FolderBrowserDialog fd = new FolderBrowserDialog();
             if (fd.ShowDialog() == DialogResult.OK)
             {
                 string filePath = Path.Combine(fd.SelectedPath, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
-                try
+                this.saveFile(filePath, this.cbDatabaseName.SelectedItem.ToString(), this.getBucketID());
+            }
+            this.setControlState(true, null);
+        }
+
+        private void saveFile(string filePath, string dbName, string s3Bucket = null)
+        {
+            try
+            {
+                MySQL c = new MySQL(dbName);
+                c.backup(filePath);
+                c.close();
+                MessageBox.Show("Wyeksportowano pomyślnie do pliku: " + filePath, "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (s3Bucket != null)
                 {
-                    MySQL c = new MySQL(this.cbDatabaseName.SelectedItem.ToString());
-                    c.backup(filePath);
-                    c.close();
-                    MessageBox.Show("Wyeksportowano pomyślnie do pliku: " + filePath, "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (cSend.Checked) {
-                        if (this.getBucketID() != null)
-                        {
-                            S3 s3Client = new S3();
-                            s3Client.send(this.getBucketID(), filePath, this.cbDatabaseName.SelectedItem.ToString() + ".sql");
-                            MessageBox.Show("Wysłano Zimnemu!", "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nie wpisałeś ID do wysłania Zimnemu!", "Błąd eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Błąd eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    S3 s3Client = new S3();
+                    s3Client.send(s3Bucket, filePath, dbName + ".sql");
+                    MessageBox.Show("Wysłano!", "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            this.Enabled = true;
-            Cursor.Current = Cursors.Default;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Błąd eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void setControlState(bool state, Control sender)
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (control != sender)
+                {
+                    control.Enabled = state;
+                }
+            }
         }
 
         private void bTimer_Click(object sender, EventArgs e)
         {
+            tInterval.Interval = Convert.ToInt32(nInterval.Value) * 60000;
+            tInterval.Enabled = !tInterval.Enabled;
+            if (tInterval.Enabled)
+            {
+                bTimer.Image = spedytor.Properties.Resources.stop;
+                bTimer.Text = "Zatrzymaj";
+                this.setControlState(false, bTimer);
+                tInterval_Tick(null, null);
+            }
+            else
+            {
+                bTimer.Image = spedytor.Properties.Resources.refresh;
+                bTimer.Text = "Zapisz co...";
+                this.Enabled = true;
+                this.setControlState(true, bTimer);
+                this.repeatFilePath = null;
+            }
         }
+
+        private string repeatFilePath = null;
 
         private void tInterval_Tick(object sender, EventArgs e)
         {
+            if (this.repeatFilePath == null)
+            {
+                FolderBrowserDialog fd = new FolderBrowserDialog();
+                if (fd.ShowDialog() == DialogResult.OK)
+                {
+                    this.repeatFilePath = fd.SelectedPath;
+                }
+                else
+                {
+                    bTimer_Click(null, null);
+                    return;
+                }
+            }
+            string filePath = Path.Combine(this.repeatFilePath, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
+            this.saveFile(filePath, this.cbDatabaseName.SelectedItem.ToString(), this.getBucketID());
         }
     }
 }
