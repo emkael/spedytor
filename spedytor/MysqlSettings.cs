@@ -27,13 +27,12 @@ namespace spedytor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.HOST = eHost.Text;
-            Properties.Settings.Default.USER = eUser.Text;
+            Properties.Settings.Default.HOST = eHost.Text.Trim();
+            Properties.Settings.Default.USER = eUser.Text.Trim();
             Properties.Settings.Default.PASS = ePass.Text;
             Properties.Settings.Default.PORT = ePort.Text;
-            Properties.S3Settings.Default.AWS_ACCESS_KEY = eS3ID.Text;
-            Properties.S3Settings.Default.AWS_SECRET_KEY = eS3Key.Text;
-            Properties.S3Settings.Default.Save();
+            Properties.S3Settings.Default.AWS_ACCESS_KEY = eS3ID.Text.Trim();
+            Properties.S3Settings.Default.AWS_SECRET_KEY = eS3Key.Text.Trim();
 
             string msg = MySQL.test();
             if (msg == "")

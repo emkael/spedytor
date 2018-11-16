@@ -36,7 +36,6 @@ namespace spedytor
             if (!MySQL.getConfigured()) (new MysqlSettings()).ShowDialog();
             if (!MySQL.getConfigured()) this.Dispose();
             this.refreshDatabaseList();
-            this.tBucketID.Text = Properties.Settings.Default.S3_BUCKET;
             this.checkS3Options();
         }
 
@@ -113,10 +112,5 @@ namespace spedytor
             }
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Properties.Settings.Default.S3_BUCKET = this.tBucketID.Text;
-            Properties.Settings.Default.Save();
-        }
     }
 }

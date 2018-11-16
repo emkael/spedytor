@@ -46,5 +46,17 @@ namespace spedytor.Properties {
                 this["AWS_SECRET_KEY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AWS_BUCKET_ID {
+            get {
+                return ((string)(this["AWS_BUCKET_ID"]));
+            }
+            set {
+                this["AWS_BUCKET_ID"] = value;
+            }
+        }
     }
 }
