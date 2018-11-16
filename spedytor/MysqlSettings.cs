@@ -23,6 +23,7 @@ namespace spedytor
             ePort.Text = Properties.Settings.Default.PORT;
             eS3ID.Text = Properties.S3Settings.Default.AWS_ACCESS_KEY;
             eS3Key.Text = Properties.S3Settings.Default.AWS_SECRET_KEY;
+            eS3Bucket.Text = Properties.S3Settings.Default.AWS_BUCKET_ID;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -33,6 +34,8 @@ namespace spedytor
             Properties.Settings.Default.PORT = ePort.Text;
             Properties.S3Settings.Default.AWS_ACCESS_KEY = eS3ID.Text.Trim();
             Properties.S3Settings.Default.AWS_SECRET_KEY = eS3Key.Text.Trim();
+            Properties.S3Settings.Default.AWS_BUCKET_ID = eS3Bucket.Text.Trim();
+            Properties.S3Settings.Default.Save();
 
             string msg = MySQL.test();
             if (msg == "")

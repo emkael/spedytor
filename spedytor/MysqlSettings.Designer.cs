@@ -35,11 +35,13 @@
             this.ePort = new System.Windows.Forms.TextBox();
             this.bOk = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.eS3Bucket = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.eS3ID = new System.Windows.Forms.TextBox();
@@ -79,7 +81,7 @@
             // 
             // bOk
             // 
-            this.bOk.Location = new System.Drawing.Point(12, 227);
+            this.bOk.Location = new System.Drawing.Point(12, 253);
             this.bOk.Name = "bOk";
             this.bOk.Size = new System.Drawing.Size(155, 23);
             this.bOk.TabIndex = 4;
@@ -104,25 +106,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "MySQL";
             // 
-            // label1
+            // label4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Host:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "User:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 100);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Port:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
@@ -134,28 +126,57 @@
             this.label3.Text = "Hasło:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label4
+            // label2
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 100);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Port:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(11, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "User:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Host:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.eS3Bucket);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.eS3ID);
             this.groupBox2.Controls.Add(this.eS3Key);
             this.groupBox2.Location = new System.Drawing.Point(12, 144);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(155, 77);
+            this.groupBox2.Size = new System.Drawing.Size(155, 102);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "S3";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 74);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(37, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Adres:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // eS3Bucket
+            // 
+            this.eS3Bucket.Location = new System.Drawing.Point(49, 71);
+            this.eS3Bucket.Name = "eS3Bucket";
+            this.eS3Bucket.Size = new System.Drawing.Size(100, 20);
+            this.eS3Bucket.TabIndex = 6;
             // 
             // label7
             // 
@@ -196,7 +217,7 @@
             this.AcceptButton = this.bOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(179, 260);
+            this.ClientSize = new System.Drawing.Size(179, 285);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bOk);
@@ -230,5 +251,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox eS3ID;
         private System.Windows.Forms.TextBox eS3Key;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox eS3Bucket;
     }
 }

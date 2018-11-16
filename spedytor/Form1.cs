@@ -41,7 +41,9 @@ namespace spedytor
 
         private void checkS3Options()
         {
-            cSend.Enabled = (Properties.S3Settings.Default.AWS_ACCESS_KEY.Length > 0 && Properties.S3Settings.Default.AWS_SECRET_KEY.Length > 0);
+            cSend.Enabled = (Properties.S3Settings.Default.AWS_ACCESS_KEY.Length > 0
+                && Properties.S3Settings.Default.AWS_SECRET_KEY.Length > 0
+                && Properties.S3Settings.Default.AWS_BUCKET_ID.Length > 0);
             if (!cSend.Enabled)
             {
                 cSend.Checked = false;
