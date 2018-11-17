@@ -155,5 +155,24 @@ namespace spedytor
             string filePath = Path.Combine(this.repeatFilePath, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
             this.saveFile(filePath, this.cbDatabaseName.SelectedItem.ToString(), this.getBucketID());
         }
+
+        private int prevHeight;
+
+        private void bToggleLog_Click(object sender, EventArgs e)
+        {
+            this.prevHeight = this.Height;
+            if (bToggleLog.Text.Equals("▼"))
+            {
+                bToggleLog.Text = "▲";
+                this.Height = this.prevHeight * 2;
+                this.prevHeight = this.Height;
+            }
+            else
+            {
+                bToggleLog.Text = "▼";
+                this.Height = this.prevHeight / 2;
+                this.prevHeight = this.Height;
+            }
+        }
     }
 }

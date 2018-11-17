@@ -40,6 +40,8 @@
             this.bExit = new System.Windows.Forms.Button();
             this.bSettings = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
+            this.bToggleLog = new System.Windows.Forms.Button();
+            this.tbLog = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nInterval)).BeginInit();
             this.SuspendLayout();
             // 
@@ -155,11 +157,31 @@
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
+            // bToggleLog
+            // 
+            this.bToggleLog.Location = new System.Drawing.Point(115, 181);
+            this.bToggleLog.Name = "bToggleLog";
+            this.bToggleLog.Size = new System.Drawing.Size(75, 23);
+            this.bToggleLog.TabIndex = 10;
+            this.bToggleLog.Text = "▼";
+            this.bToggleLog.UseVisualStyleBackColor = true;
+            this.bToggleLog.Click += new System.EventHandler(this.bToggleLog_Click);
+            // 
+            // tbLog
+            // 
+            this.tbLog.Location = new System.Drawing.Point(12, 211);
+            this.tbLog.Multiline = true;
+            this.tbLog.Name = "tbLog";
+            this.tbLog.Size = new System.Drawing.Size(282, 231);
+            this.tbLog.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(307, 187);
+            this.ClientSize = new System.Drawing.Size(307, 208);
+            this.Controls.Add(this.tbLog);
+            this.Controls.Add(this.bToggleLog);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nInterval);
             this.Controls.Add(this.bTimer);
@@ -193,6 +215,8 @@
         private System.Windows.Forms.NumericUpDown nInterval;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer tInterval;
+        private System.Windows.Forms.Button bToggleLog;
+        private System.Windows.Forms.TextBox tbLog;
     }
 }
 
