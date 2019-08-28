@@ -80,5 +80,13 @@ namespace spedytor
                 }
             }
         }
+
+        public void cleanup()
+        {
+            if (this.file != null)
+            {
+                this.file.Close();
+            }
+        }
     }
 }

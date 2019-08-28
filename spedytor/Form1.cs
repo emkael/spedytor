@@ -181,5 +181,10 @@ namespace spedytor
         {
             Logger.getLogger(this.tbLog, LOG_FILENAME).tick();
         }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Logger.getLogger(this.tbLog, LOG_FILENAME).cleanup();
+        }
     }
 }
