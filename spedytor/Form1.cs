@@ -116,7 +116,7 @@ namespace spedytor
             }
             catch (Exception ex)
             {
-                Logger.getLogger(this.tbLog, LOG_FILENAME).log(ex.Message);
+                Logger.getLogger(this.tbLog, LOG_FILENAME).log("ERROR: " + ex.Message);
             }
         }
 
