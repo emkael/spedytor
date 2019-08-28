@@ -46,22 +46,26 @@
             this.label8 = new System.Windows.Forms.Label();
             this.eS3ID = new System.Windows.Forms.TextBox();
             this.eS3Key = new System.Windows.Forms.TextBox();
+            this.eDirectory = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.bDirectorySelect = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // eHost
             // 
             this.eHost.Location = new System.Drawing.Point(49, 19);
             this.eHost.Name = "eHost";
-            this.eHost.Size = new System.Drawing.Size(100, 20);
+            this.eHost.Size = new System.Drawing.Size(155, 20);
             this.eHost.TabIndex = 0;
             // 
             // eUser
             // 
             this.eUser.Location = new System.Drawing.Point(49, 45);
             this.eUser.Name = "eUser";
-            this.eUser.Size = new System.Drawing.Size(100, 20);
+            this.eUser.Size = new System.Drawing.Size(155, 20);
             this.eUser.TabIndex = 1;
             // 
             // ePass
@@ -69,21 +73,21 @@
             this.ePass.Location = new System.Drawing.Point(49, 71);
             this.ePass.Name = "ePass";
             this.ePass.PasswordChar = '*';
-            this.ePass.Size = new System.Drawing.Size(100, 20);
+            this.ePass.Size = new System.Drawing.Size(155, 20);
             this.ePass.TabIndex = 2;
             // 
             // ePort
             // 
             this.ePort.Location = new System.Drawing.Point(49, 97);
             this.ePort.Name = "ePort";
-            this.ePort.Size = new System.Drawing.Size(100, 20);
+            this.ePort.Size = new System.Drawing.Size(155, 20);
             this.ePort.TabIndex = 3;
             // 
             // bOk
             // 
-            this.bOk.Location = new System.Drawing.Point(12, 253);
+            this.bOk.Location = new System.Drawing.Point(12, 310);
             this.bOk.Name = "bOk";
-            this.bOk.Size = new System.Drawing.Size(155, 23);
+            this.bOk.Size = new System.Drawing.Size(210, 23);
             this.bOk.TabIndex = 4;
             this.bOk.Text = "OK";
             this.bOk.UseVisualStyleBackColor = true;
@@ -101,7 +105,7 @@
             this.groupBox1.Controls.Add(this.ePass);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(155, 126);
+            this.groupBox1.Size = new System.Drawing.Size(210, 126);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "MySQL";
@@ -154,9 +158,9 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.eS3ID);
             this.groupBox2.Controls.Add(this.eS3Key);
-            this.groupBox2.Location = new System.Drawing.Point(12, 144);
+            this.groupBox2.Location = new System.Drawing.Point(12, 202);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(155, 102);
+            this.groupBox2.Size = new System.Drawing.Size(210, 102);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "S3";
@@ -175,7 +179,7 @@
             // 
             this.eS3Bucket.Location = new System.Drawing.Point(49, 71);
             this.eS3Bucket.Name = "eS3Bucket";
-            this.eS3Bucket.Size = new System.Drawing.Size(100, 20);
+            this.eS3Bucket.Size = new System.Drawing.Size(155, 20);
             this.eS3Bucket.TabIndex = 6;
             // 
             // label7
@@ -202,22 +206,51 @@
             // 
             this.eS3ID.Location = new System.Drawing.Point(49, 19);
             this.eS3ID.Name = "eS3ID";
-            this.eS3ID.Size = new System.Drawing.Size(100, 20);
+            this.eS3ID.Size = new System.Drawing.Size(155, 20);
             this.eS3ID.TabIndex = 0;
             // 
             // eS3Key
             // 
             this.eS3Key.Location = new System.Drawing.Point(49, 45);
             this.eS3Key.Name = "eS3Key";
-            this.eS3Key.Size = new System.Drawing.Size(100, 20);
+            this.eS3Key.Size = new System.Drawing.Size(155, 20);
             this.eS3Key.TabIndex = 1;
+            // 
+            // eDirectory
+            // 
+            this.eDirectory.Location = new System.Drawing.Point(6, 23);
+            this.eDirectory.Name = "eDirectory";
+            this.eDirectory.Size = new System.Drawing.Size(166, 20);
+            this.eDirectory.TabIndex = 10;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.bDirectorySelect);
+            this.groupBox3.Controls.Add(this.eDirectory);
+            this.groupBox3.Location = new System.Drawing.Point(12, 144);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(210, 52);
+            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Domyślny katalog";
+            // 
+            // bDirectorySelect
+            // 
+            this.bDirectorySelect.Location = new System.Drawing.Point(178, 21);
+            this.bDirectorySelect.Name = "bDirectorySelect";
+            this.bDirectorySelect.Size = new System.Drawing.Size(26, 23);
+            this.bDirectorySelect.TabIndex = 11;
+            this.bDirectorySelect.Text = "...";
+            this.bDirectorySelect.UseVisualStyleBackColor = true;
+            this.bDirectorySelect.Click += new System.EventHandler(this.bDirectorySelect_Click);
             // 
             // MysqlSettings
             // 
             this.AcceptButton = this.bOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(179, 285);
+            this.ClientSize = new System.Drawing.Size(234, 339);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bOk);
@@ -230,6 +263,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -253,5 +288,8 @@
         private System.Windows.Forms.TextBox eS3Key;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox eS3Bucket;
+        private System.Windows.Forms.TextBox eDirectory;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button bDirectorySelect;
     }
 }

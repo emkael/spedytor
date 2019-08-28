@@ -82,5 +82,17 @@ namespace spedytor.Properties {
                 this["CONFIGURED"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DIRECTORY {
+            get {
+                return ((string)(this["DIRECTORY"]));
+            }
+            set {
+                this["DIRECTORY"] = value;
+            }
+        }
     }
 }

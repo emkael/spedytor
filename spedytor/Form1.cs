@@ -75,12 +75,27 @@ namespace spedytor
         private void bSave_Click(object sender, EventArgs e)
         {
             this.setControlState(false, null);
-            FolderBrowserDialog fd = new FolderBrowserDialog();
-            if (fd.ShowDialog() == DialogResult.OK)
+            String directory = spedytor.Properties.Settings.Default.DIRECTORY;
+            if (!Directory.Exists(directory))
             {
-                string filePath = Path.Combine(fd.SelectedPath, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
-                this.saveFile(filePath, this.cbDatabaseName.SelectedItem.ToString(), this.getBucketID());
+                directory = "";
+                spedytor.Properties.Settings.Default.DIRECTORY = "";
             }
+            if (directory.Length == 0)
+            {
+                FolderBrowserDialog fd = new FolderBrowserDialog();
+                if (fd.ShowDialog() == DialogResult.OK)
+                {
+                    directory = fd.SelectedPath;
+                }
+                else
+                {
+                    this.setControlState(true, null);
+                    return;
+                }
+            }
+            string filePath = Path.Combine(directory, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
+            this.saveFile(filePath, this.cbDatabaseName.SelectedItem.ToString(), this.getBucketID());
             this.setControlState(true, null);
         }
 
