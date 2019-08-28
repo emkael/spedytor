@@ -12,6 +12,8 @@ namespace spedytor
 {
     public partial class Form1 : Form
     {
+        const string LOG_FILENAME = "spedytor.log";
+
         public Form1()
         {
             InitializeComponent();
@@ -89,17 +91,17 @@ namespace spedytor
                 MySQL c = new MySQL(dbName);
                 c.backup(filePath);
                 c.close();
-                MessageBox.Show("Wyeksportowano pomyślnie do pliku: " + filePath, "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Logger.getLogger(this.tbLog, LOG_FILENAME).log("Wyeksportowano pomyślnie do pliku: " + filePath);
                 if (s3Bucket != null)
                 {
                     S3 s3Client = new S3();
                     s3Client.send(s3Bucket, filePath, dbName + ".sql");
-                    MessageBox.Show("Wysłano!", "Sukces eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Logger.getLogger(this.tbLog, LOG_FILENAME).log("Wysłano!");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Błąd eksportu!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.getLogger(this.tbLog, LOG_FILENAME).log(ex.Message);
             }
         }
 
@@ -107,7 +109,7 @@ namespace spedytor
         {
             foreach (Control control in this.Controls)
             {
-                if (control != sender)
+                if (control != sender && control != this.tbLog && control != this.bToggleLog)
                 {
                     control.Enabled = state;
                 }
@@ -173,6 +175,11 @@ namespace spedytor
                 this.Height = this.prevHeight / 2;
                 this.prevHeight = this.Height;
             }
+        }
+
+        private void tLogger_Tick(object sender, EventArgs e)
+        {
+            Logger.getLogger(this.tbLog, LOG_FILENAME).tick();
         }
     }
 }

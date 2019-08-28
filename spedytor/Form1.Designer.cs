@@ -42,6 +42,7 @@
             this.bSave = new System.Windows.Forms.Button();
             this.bToggleLog = new System.Windows.Forms.Button();
             this.tbLog = new System.Windows.Forms.TextBox();
+            this.tLogger = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nInterval)).BeginInit();
             this.SuspendLayout();
             // 
@@ -169,11 +170,18 @@
             // 
             // tbLog
             // 
-            this.tbLog.Location = new System.Drawing.Point(12, 211);
+            this.tbLog.Location = new System.Drawing.Point(13, 210);
             this.tbLog.Multiline = true;
             this.tbLog.Name = "tbLog";
-            this.tbLog.Size = new System.Drawing.Size(282, 231);
+            this.tbLog.ReadOnly = true;
+            this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbLog.Size = new System.Drawing.Size(282, 229);
             this.tbLog.TabIndex = 11;
+            // 
+            // tLogger
+            // 
+            this.tLogger.Enabled = true;
+            this.tLogger.Tick += new System.EventHandler(this.tLogger_Tick);
             // 
             // Form1
             // 
@@ -217,6 +225,7 @@
         private System.Windows.Forms.Timer tInterval;
         private System.Windows.Forms.Button bToggleLog;
         private System.Windows.Forms.TextBox tbLog;
+        private System.Windows.Forms.Timer tLogger;
     }
 }
 
