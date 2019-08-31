@@ -22,7 +22,8 @@ namespace spedytor
 
         private void bExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Logger.getLogger(this.tbLog, LOG_FILENAME).cleanup();
+            this.Dispose();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -224,9 +225,36 @@ namespace spedytor
             Logger.getLogger(this.tbLog, LOG_FILENAME).tick();
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Logger.getLogger(this.tbLog, LOG_FILENAME).cleanup();
+            this.Show();
+            this.notifyIcon.Visible = false;
+        }
+
+        private void minimizeToTray()
+        {
+            this.Hide();
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.ShowBalloonTip(1000, "Spedytor", "Spedytor będzie działać w tle", ToolTipIcon.Info);
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.minimizeToTray();
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.minimizeToTray();
+        }
+
+        private void closeMenuItem_Click(object sender, EventArgs e)
+        {
+            this.bExit_Click(null, null);
         }
     }
 }
