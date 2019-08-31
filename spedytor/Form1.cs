@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
+using System.Threading;
 
 namespace spedytor
 {
@@ -72,9 +73,15 @@ namespace spedytor
             return null;
         }
 
-        private void bSave_Click(object sender, EventArgs e)
+        private void invokeSave(string filePath, string dbName, bool enableControls = false)
         {
-            this.setControlState(false, null);
+            Thread t = new Thread(() => this.saveFile(filePath, dbName, this.getBucketID(), enableControls));
+            t.IsBackground = true;
+            t.Start();
+        }
+
+        private string getDirectory()
+        {
             String directory = spedytor.Properties.Settings.Default.DIRECTORY;
             if (!Directory.Exists(directory))
             {
@@ -88,18 +95,29 @@ namespace spedytor
                 {
                     directory = fd.SelectedPath;
                 }
-                else
-                {
-                    this.setControlState(true, null);
-                    return;
-                }
             }
-            string filePath = Path.Combine(directory, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
-            this.saveFile(filePath, this.cbDatabaseName.SelectedItem.ToString(), this.getBucketID());
-            this.setControlState(true, null);
+            return directory;
         }
 
-        private void saveFile(string filePath, string dbName, string s3Bucket = null)
+        private void bSave_Click(object sender, EventArgs e)
+        {
+            this.setControlState(false, null);
+            string directory = this.getDirectory();
+            if (directory.Length > 0)
+            {
+                string filePath = Path.Combine(directory, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
+                string dbName = this.cbDatabaseName.SelectedItem.ToString();
+                this.invokeSave(filePath, dbName);
+            }
+            else
+            {
+
+                this.setControlState(true, null);
+                return;
+            }
+        }
+
+        private void saveFile(string filePath, string dbName, string s3Bucket = null, bool enableControls = true)
         {
             try
             {
@@ -118,7 +136,16 @@ namespace spedytor
             {
                 Logger.getLogger(this.tbLog, LOG_FILENAME).log("ERROR: " + ex.Message);
             }
+            finally
+            {
+                if (enableControls)
+                {
+                    this.Invoke(new setStateDelegate(setControlState), new object[] { true, null });
+                }
+            }
         }
+
+        private delegate void setStateDelegate(bool state, Control sender);
 
         private void setControlState(bool state, Control sender)
         {
@@ -158,19 +185,19 @@ namespace spedytor
         {
             if (this.repeatFilePath == null)
             {
-                FolderBrowserDialog fd = new FolderBrowserDialog();
-                if (fd.ShowDialog() == DialogResult.OK)
-                {
-                    this.repeatFilePath = fd.SelectedPath;
-                }
-                else
-                {
-                    bTimer_Click(null, null);
-                    return;
-                }
+                this.repeatFilePath = this.getDirectory();
             }
-            string filePath = Path.Combine(this.repeatFilePath, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
-            this.saveFile(filePath, this.cbDatabaseName.SelectedItem.ToString(), this.getBucketID());
+            if (this.repeatFilePath.Length > 0)
+            {
+                string filePath = Path.Combine(this.repeatFilePath, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
+                string dbName = this.cbDatabaseName.SelectedItem.ToString();
+                this.invokeSave(filePath, dbName, false);
+            }
+            else
+            {
+                bTimer_Click(null, null);
+                return;
+            }
         }
 
         private int prevHeight;
