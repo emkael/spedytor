@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lChooseDatabase = new System.Windows.Forms.Label();
-            this.cbDatabaseName = new System.Windows.Forms.ComboBox();
             this.cSend = new System.Windows.Forms.CheckBox();
             this.nInterval = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,6 +45,7 @@
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bSelectDBs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nInterval)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -55,18 +55,9 @@
             this.lChooseDatabase.AutoSize = true;
             this.lChooseDatabase.Location = new System.Drawing.Point(12, 11);
             this.lChooseDatabase.Name = "lChooseDatabase";
-            this.lChooseDatabase.Size = new System.Drawing.Size(34, 13);
+            this.lChooseDatabase.Size = new System.Drawing.Size(71, 13);
             this.lChooseDatabase.TabIndex = 0;
-            this.lChooseDatabase.Text = "Baza:";
-            // 
-            // cbDatabaseName
-            // 
-            this.cbDatabaseName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDatabaseName.FormattingEnabled = true;
-            this.cbDatabaseName.Location = new System.Drawing.Point(52, 8);
-            this.cbDatabaseName.Name = "cbDatabaseName";
-            this.cbDatabaseName.Size = new System.Drawing.Size(186, 21);
-            this.cbDatabaseName.TabIndex = 1;
+            this.lChooseDatabase.Text = "Bazy danych:";
             // 
             // cSend
             // 
@@ -116,6 +107,7 @@
             // 
             // bTimer
             // 
+            this.bTimer.Enabled = false;
             this.bTimer.Image = global::spedytor.Properties.Resources.refresh;
             this.bTimer.Location = new System.Drawing.Point(153, 35);
             this.bTimer.Name = "bTimer";
@@ -152,6 +144,7 @@
             // 
             // bSave
             // 
+            this.bSave.Enabled = false;
             this.bSave.Image = global::spedytor.Properties.Resources.save;
             this.bSave.Location = new System.Drawing.Point(12, 35);
             this.bSave.Name = "bSave";
@@ -209,11 +202,22 @@
             this.closeMenuItem.Text = "Zakończ";
             this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
             // 
+            // bSelectDBs
+            // 
+            this.bSelectDBs.Location = new System.Drawing.Point(89, 4);
+            this.bSelectDBs.Name = "bSelectDBs";
+            this.bSelectDBs.Size = new System.Drawing.Size(148, 23);
+            this.bSelectDBs.TabIndex = 12;
+            this.bSelectDBs.Text = "[nie wybrano]";
+            this.bSelectDBs.UseVisualStyleBackColor = true;
+            this.bSelectDBs.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(307, 208);
+            this.Controls.Add(this.bSelectDBs);
             this.Controls.Add(this.tbLog);
             this.Controls.Add(this.bToggleLog);
             this.Controls.Add(this.label1);
@@ -223,7 +227,6 @@
             this.Controls.Add(this.bSettings);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.cSend);
-            this.Controls.Add(this.cbDatabaseName);
             this.Controls.Add(this.lChooseDatabase);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -243,7 +246,6 @@
         #endregion
 
         private System.Windows.Forms.Label lChooseDatabase;
-        private System.Windows.Forms.ComboBox cbDatabaseName;
         private System.Windows.Forms.CheckBox cSend;
         private System.Windows.Forms.Button bSave;
         private System.Windows.Forms.Button bSettings;
@@ -258,6 +260,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem closeMenuItem;
+        private System.Windows.Forms.Button bSelectDBs;
     }
 }
 

@@ -74,8 +74,15 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dbWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dbWindow.Designer.cs">
+      <DependentUpon>dbWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +105,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>S3Settings.settings</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="dbWindow.resx">
+      <DependentUpon>dbWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

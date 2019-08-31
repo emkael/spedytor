@@ -14,10 +14,14 @@ namespace spedytor
     public partial class Form1 : Form
     {
         const string LOG_FILENAME = "spedytor.log";
+        private List<string> selectedDBs = new List<string>();
+        private dbWindow dbSelectionWindow = new dbWindow();
+        private int runningDumps = 0;
 
         public Form1()
         {
             InitializeComponent();
+            this.dbSelectionWindow.setParent(this);
         }
 
         private void bExit_Click(object sender, EventArgs e)
@@ -54,14 +58,20 @@ namespace spedytor
 
         internal void refreshDatabaseList()
         {
-            this.cbDatabaseName.Items.Clear();
+            this.dbSelectionWindow.lbDatabases.Items.Clear();
             MySQL c = new MySQL("");
             MySqlDataReader dbs = c.select("SELECT TABLE_SCHEMA FROM information_schema.COLUMNS GROUP BY TABLE_SCHEMA;");
+            int index = 0;
             while (dbs.Read())
             {
-                this.cbDatabaseName.Items.Add(dbs.GetString(0));
+                string dbName = dbs.GetString(0);
+                this.dbSelectionWindow.lbDatabases.Items.Add(dbName);
+                if (this.selectedDBs.IndexOf(dbName) > -1)
+                {
+                    this.dbSelectionWindow.lbDatabases.SelectedIndices.Add(index);
+                }
+                index++;
             }
-            this.cbDatabaseName.SelectedIndex = 0;
             dbs.Close();
         }
 
@@ -102,24 +112,24 @@ namespace spedytor
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            this.setControlState(false, null);
             string directory = this.getDirectory();
             if (directory.Length > 0)
             {
-                string filePath = Path.Combine(directory, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
-                string dbName = this.cbDatabaseName.SelectedItem.ToString();
-                this.invokeSave(filePath, dbName);
-            }
-            else
-            {
-
-                this.setControlState(true, null);
-                return;
+                foreach (string dbName in this.selectedDBs)
+                {
+                    string filePath = Path.Combine(directory, dbName + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
+                    this.invokeSave(filePath, dbName, true);
+                }
             }
         }
 
-        private void saveFile(string filePath, string dbName, string s3Bucket = null, bool enableControls = true)
+        private void saveFile(string filePath, string dbName, string s3Bucket = null, bool enableControls = false)
         {
+            if (enableControls && this.runningDumps == 0)
+            {
+                this.Invoke(new setStateDelegate(setControlState), new object[] { false, null });
+            }
+            this.runningDumps++;
             try
             {
                 MySQL c = new MySQL(dbName);
@@ -130,7 +140,7 @@ namespace spedytor
                 {
                     S3 s3Client = new S3();
                     s3Client.send(s3Bucket, filePath, dbName + ".sql");
-                    Logger.getLogger(this.tbLog, LOG_FILENAME).log("Wysłano!");
+                    Logger.getLogger(this.tbLog, LOG_FILENAME).log("Wysłano bazę danych: " + dbName + "!");
                 }
             }
             catch (Exception ex)
@@ -139,7 +149,8 @@ namespace spedytor
             }
             finally
             {
-                if (enableControls)
+                this.runningDumps--;
+                if (enableControls && this.runningDumps == 0)
                 {
                     this.Invoke(new setStateDelegate(setControlState), new object[] { true, null });
                 }
@@ -190,9 +201,11 @@ namespace spedytor
             }
             if (this.repeatFilePath.Length > 0)
             {
-                string filePath = Path.Combine(this.repeatFilePath, this.cbDatabaseName.SelectedItem.ToString() + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
-                string dbName = this.cbDatabaseName.SelectedItem.ToString();
-                this.invokeSave(filePath, dbName, false);
+                foreach (string dbName in this.selectedDBs)
+                {
+                    string filePath = Path.Combine(this.repeatFilePath, dbName + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
+                    this.invokeSave(filePath, dbName, false);
+                }
             }
             else
             {
@@ -256,5 +269,26 @@ namespace spedytor
         {
             this.bExit_Click(null, null);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.refreshDatabaseList();
+            this.dbSelectionWindow.ShowDialog();
+        }
+
+        internal void setSelectedDBs(List<string> selected)
+        {
+            this.selectedDBs = selected;
+            this.bSave.Enabled = this.bTimer.Enabled = (this.selectedDBs.Count > 0);
+            if (this.selectedDBs.Count == 0)
+            {
+                this.bSelectDBs.Text = "[nie wybrano]";
+            }
+            else
+            {
+                this.bSelectDBs.Text = String.Format("[wybrano: {0}]", this.selectedDBs.Count);
+            }
+        }
+
     }
 }
