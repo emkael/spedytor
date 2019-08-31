@@ -133,7 +133,7 @@
             this.bExit.Name = "bExit";
             this.bExit.Size = new System.Drawing.Size(70, 70);
             this.bExit.TabIndex = 6;
-            this.bExit.Text = "Wyjdź";
+            this.bExit.Text = "Zakończ";
             this.bExit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.bExit.UseVisualStyleBackColor = true;
             this.bExit.Click += new System.EventHandler(this.bExit_Click);
@@ -200,13 +200,13 @@
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.closeMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(118, 26);
+            this.contextMenuStrip.Size = new System.Drawing.Size(119, 26);
             // 
             // closeMenuItem
             // 
             this.closeMenuItem.Name = "closeMenuItem";
-            this.closeMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.closeMenuItem.Text = "Zamknij";
+            this.closeMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeMenuItem.Text = "Zakończ";
             this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
             // 
             // Form1
