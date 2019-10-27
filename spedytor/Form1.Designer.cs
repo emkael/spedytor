@@ -46,6 +46,8 @@
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bSelectDBs = new System.Windows.Forms.Button();
+            this.lDumpStats = new System.Windows.Forms.Label();
+            this.lSendStats = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nInterval)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -167,12 +169,12 @@
             // 
             // tbLog
             // 
-            this.tbLog.Location = new System.Drawing.Point(13, 210);
+            this.tbLog.Location = new System.Drawing.Point(13, 236);
             this.tbLog.Multiline = true;
             this.tbLog.Name = "tbLog";
             this.tbLog.ReadOnly = true;
             this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLog.Size = new System.Drawing.Size(282, 229);
+            this.tbLog.Size = new System.Drawing.Size(282, 203);
             this.tbLog.TabIndex = 11;
             // 
             // tLogger
@@ -212,11 +214,31 @@
             this.bSelectDBs.UseVisualStyleBackColor = true;
             this.bSelectDBs.Click += new System.EventHandler(this.button1_Click);
             // 
+            // lDumpStats
+            // 
+            this.lDumpStats.AutoSize = true;
+            this.lDumpStats.Location = new System.Drawing.Point(12, 207);
+            this.lDumpStats.Name = "lDumpStats";
+            this.lDumpStats.Size = new System.Drawing.Size(68, 13);
+            this.lDumpStats.TabIndex = 13;
+            this.lDumpStats.Text = "Ostatni zrzut:";
+            // 
+            // lSendStats
+            // 
+            this.lSendStats.AutoSize = true;
+            this.lSendStats.Location = new System.Drawing.Point(12, 220);
+            this.lSendStats.Name = "lSendStats";
+            this.lSendStats.Size = new System.Drawing.Size(91, 13);
+            this.lSendStats.TabIndex = 14;
+            this.lSendStats.Text = "Ostatnia wysyłka:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(307, 208);
+            this.Controls.Add(this.lSendStats);
+            this.Controls.Add(this.lDumpStats);
             this.Controls.Add(this.bSelectDBs);
             this.Controls.Add(this.tbLog);
             this.Controls.Add(this.bToggleLog);
@@ -260,6 +282,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem closeMenuItem;
         private System.Windows.Forms.Button bSelectDBs;
+        private System.Windows.Forms.Label lDumpStats;
+        private System.Windows.Forms.Label lSendStats;
     }
 }
 

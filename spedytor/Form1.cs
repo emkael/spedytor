@@ -18,6 +18,10 @@ namespace spedytor
         private List<string> selectedDBs = new List<string>();
         private dbWindow dbSelectionWindow = new dbWindow();
         private int runningDumps = 0;
+        private string lastDumpDB = null;
+        private DateTime lastDumpTime;
+        private string lastSendDB = null;
+        private DateTime lastSendTime;
 
         public Form1()
         {
@@ -98,9 +102,9 @@ namespace spedytor
             return null;
         }
 
-        private Thread invokeSave(string filePath, string dbName, bool enableControls = false)
+        private Thread invokeSave(string filePath, string dbName, bool enableControls = false, bool updateStats = true)
         {
-            Thread t = new Thread(() => this.saveFile(filePath, dbName, this.getBucketID(), enableControls));
+            Thread t = new Thread(() => this.saveFile(filePath, dbName, this.getBucketID(), enableControls, updateStats));
             t.IsBackground = true;
             t.Start();
             return t;
@@ -138,7 +142,7 @@ namespace spedytor
             }
         }
 
-        private void saveFile(string filePath, string dbName, string s3Bucket = null, bool enableControls = false)
+        private void saveFile(string filePath, string dbName, string s3Bucket = null, bool enableControls = false, bool updateStats = true)
         {
             if (enableControls && this.runningDumps == 0)
             {
@@ -150,12 +154,24 @@ namespace spedytor
                 MySQL c = new MySQL(dbName);
                 c.backup(filePath);
                 c.close();
+                if (updateStats)
+                {
+                    this.lastDumpDB = dbName;
+                    this.lastDumpTime = DateTime.Now;
+                    this.refreshLastRunStats();
+                }
                 Logger.getLogger(this.tbLog, LOG_FILENAME).log("Wyeksportowano pomyślnie do pliku: " + filePath);
                 if (s3Bucket != null)
                 {
                     S3 s3Client = new S3();
                     s3Client.send(s3Bucket, filePath, dbName + ".sql");
                     Logger.getLogger(this.tbLog, LOG_FILENAME).log("Wysłano bazę danych: " + dbName + "!");
+                    if (updateStats)
+                    {
+                        this.lastSendDB = dbName;
+                        this.lastSendTime = DateTime.Now;
+                        this.refreshLastRunStats();
+                    }
                 }
             }
             catch (Exception ex)
@@ -178,7 +194,7 @@ namespace spedytor
         {
             foreach (Control control in this.Controls)
             {
-                if (control != sender && control != this.tbLog && control != this.bToggleLog)
+                if (control != sender && control != this.tbLog && control != this.bToggleLog && control != this.lSendStats && control != this.lDumpStats)
                 {
                     control.Enabled = state;
                 }
@@ -220,7 +236,7 @@ namespace spedytor
                 foreach (string dbName in this.selectedDBs)
                 {
                     string filePath = Path.Combine(this.repeatFilePath, dbName + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
-                    threadList.Add(this.invokeSave(filePath, dbName, false));
+                    threadList.Add(this.invokeSave(filePath, dbName, false, sender != null));
                 }
                 if (sender == null) // programmatic invoke, not actual button click
                 {
@@ -273,6 +289,45 @@ namespace spedytor
             this.Hide();
             this.notifyIcon.Visible = true;
             this.notifyIcon.ShowBalloonTip(1000, "Spedytor", "Spedytor będzie działać w tle", ToolTipIcon.Info);
+        }
+
+        private delegate void setStatsText(Label label, String text);
+
+        private void setLabelText(Label label, String text)
+        {
+            label.Text = text;
+        }
+
+        private void refreshLastRunStats()
+        {
+            StringBuilder sb = new StringBuilder("Spedytor\n");
+            if (this.lastDumpDB != null)
+            {
+                sb.Append("↓ ");
+                sb.Append(this.lastDumpTime.ToShortTimeString());
+                sb.Append(" ");
+                sb.Append(this.lastDumpDB.Substring(0, Math.Min(20, this.lastDumpDB.Length)));
+                sb.Append("\n");
+                this.Invoke(new setStatsText(setLabelText), new object[] { this.lDumpStats, "Ostatni zrzut: " + this.lastDumpDB + " (" + this.lastDumpTime.ToString() + ")" });
+            }
+            else
+            {
+                this.Invoke(new setStatsText(setLabelText), new object[] { this.lDumpStats, "" });
+            }
+            if (this.lastSendDB != null)
+            {
+                sb.Append("↑ ");
+                sb.Append(this.lastSendTime.ToShortTimeString());
+                sb.Append(" ");
+                sb.Append(this.lastSendDB.Substring(0, Math.Min(20, this.lastSendDB.Length)));
+                sb.Append("\n");
+                this.Invoke(new setStatsText(setLabelText), new object[] { this.lSendStats, "Ostatnia wysyłka: " + this.lastSendDB + " (" + this.lastSendTime.ToString() + ")" });
+            }
+            else
+            {
+                this.Invoke(new setStatsText(setLabelText), new object[] { this.lSendStats, "" });
+            }
+            this.notifyIcon.Text = sb.ToString().Trim();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
