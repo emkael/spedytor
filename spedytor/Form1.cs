@@ -262,7 +262,23 @@ namespace spedytor
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            this.minimizeToTray();
+            if (this.tInterval.Enabled)
+            {
+                DialogResult dr = MessageBox.Show("Spedytor jest w trybie pracy ciągłej.\nCzy chcesz zakończyć działanie programu?", "Spedytor - wyjście", MessageBoxButtons.YesNoCancel);
+                switch (dr)
+                {
+                    case DialogResult.Yes:
+                        this.bExit_Click(null, null);
+                        break;
+                    case DialogResult.No:
+                        this.minimizeToTray();
+                        break;
+                }
+            }
+            else
+            {
+                this.bExit_Click(null, null);
+            }
         }
 
         private void closeMenuItem_Click(object sender, EventArgs e)
