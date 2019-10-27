@@ -97,6 +97,11 @@
     <Compile Include="MysqlSettings.Designer.cs">
       <DependentUpon>MysqlSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\OptionSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>OptionSettings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="S3.cs" />
@@ -121,6 +126,10 @@
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\OptionSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>OptionSettings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

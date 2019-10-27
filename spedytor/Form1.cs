@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
@@ -33,7 +34,9 @@ namespace spedytor
                     tInterval_Tick(null, null);
                 }
             }
+            this.tLogger.Enabled = false;
             Logger.getLogger(this.tbLog, LOG_FILENAME).cleanup();
+            this.saveSettings();
             this.Dispose();
         }
 
@@ -41,6 +44,7 @@ namespace spedytor
         {
             if (!MySQL.getConfigured()) (new MysqlSettings()).ShowDialog();
             if (!MySQL.getConfigured()) this.Dispose();
+            this.restoreSettings();
             this.refreshDatabaseList();
             this.checkS3Options();
         }
@@ -69,9 +73,11 @@ namespace spedytor
             MySQL c = new MySQL("");
             MySqlDataReader dbs = c.select("SELECT TABLE_SCHEMA FROM information_schema.COLUMNS GROUP BY TABLE_SCHEMA;");
             int index = 0;
+            List<string> dbNames = new List<string>();
             while (dbs.Read())
             {
                 string dbName = dbs.GetString(0);
+                dbNames.Add(dbName);
                 this.dbSelectionWindow.lbDatabases.Items.Add(dbName);
                 if (this.selectedDBs.IndexOf(dbName) > -1)
                 {
@@ -80,6 +86,7 @@ namespace spedytor
                 index++;
             }
             dbs.Close();
+            this.setSelectedDBs(this.selectedDBs.Intersect(dbNames).ToList());
         }
 
         private string getBucketID()
@@ -321,6 +328,24 @@ namespace spedytor
             {
                 this.bSelectDBs.Text = String.Format("[wybrano: {0}]", this.selectedDBs.Count);
             }
+        }
+
+        private void restoreSettings()
+        {
+            this.setSelectedDBs(Properties.OptionSettings.Default.dbNames.Cast<string>().ToList());
+            this.cSend.Checked = Properties.OptionSettings.Default.send;
+        }
+
+        private void saveSettings()
+        {
+            Properties.OptionSettings.Default.send = this.cSend.Checked;
+            if (Properties.OptionSettings.Default.dbNames == null)
+            {
+                Properties.OptionSettings.Default.dbNames = new System.Collections.Specialized.StringCollection();
+            }
+            Properties.OptionSettings.Default.dbNames.Clear();
+            Properties.OptionSettings.Default.dbNames.AddRange(this.selectedDBs.ToArray());
+            Properties.OptionSettings.Default.Save();
         }
 
     }
