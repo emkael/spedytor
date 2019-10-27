@@ -45,5 +45,17 @@ namespace spedytor.Properties {
                 this["SEND_FLAG"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public decimal RUN_INTERVAL {
+            get {
+                return ((decimal)(this["RUN_INTERVAL"]));
+            }
+            set {
+                this["RUN_INTERVAL"] = value;
+            }
+        }
     }
 }

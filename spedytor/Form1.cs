@@ -389,6 +389,7 @@ namespace spedytor
         {
             this.setSelectedDBs(Properties.OptionSettings.Default.DB_NAMES.Cast<string>().ToList());
             this.cSend.Checked = Properties.OptionSettings.Default.SEND_FLAG;
+            this.nInterval.Value = Properties.OptionSettings.Default.RUN_INTERVAL;
         }
 
         private void saveSettings()
@@ -400,6 +401,7 @@ namespace spedytor
             }
             Properties.OptionSettings.Default.DB_NAMES.Clear();
             Properties.OptionSettings.Default.DB_NAMES.AddRange(this.selectedDBs.ToArray());
+            Properties.OptionSettings.Default.RUN_INTERVAL = this.nInterval.Value;
             Properties.OptionSettings.Default.Save();
         }
 
