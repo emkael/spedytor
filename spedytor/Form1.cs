@@ -26,6 +26,13 @@ namespace spedytor
 
         private void bExit_Click(object sender, EventArgs e)
         {
+            if (this.selectedDBs.Count > 0)
+            {
+                if (MessageBox.Show("Czy chcesz zrzucić/wysłać bazy przed zakończeniem działania programu?", "Spedytor - wyjście", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    tInterval_Tick(null, null);
+                }
+            }
             Logger.getLogger(this.tbLog, LOG_FILENAME).cleanup();
             this.Dispose();
         }
@@ -84,11 +91,12 @@ namespace spedytor
             return null;
         }
 
-        private void invokeSave(string filePath, string dbName, bool enableControls = false)
+        private Thread invokeSave(string filePath, string dbName, bool enableControls = false)
         {
             Thread t = new Thread(() => this.saveFile(filePath, dbName, this.getBucketID(), enableControls));
             t.IsBackground = true;
             t.Start();
+            return t;
         }
 
         private string getDirectory()
@@ -201,10 +209,18 @@ namespace spedytor
             }
             if (this.repeatFilePath.Length > 0)
             {
+                List<Thread> threadList = new List<Thread>();
                 foreach (string dbName in this.selectedDBs)
                 {
                     string filePath = Path.Combine(this.repeatFilePath, dbName + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
-                    this.invokeSave(filePath, dbName, false);
+                    threadList.Add(this.invokeSave(filePath, dbName, false));
+                }
+                if (e == null) // programmatic invoke, not actual button click
+                {
+                    foreach (Thread t in threadList)
+                    {
+                        t.Join();
+                    }
                 }
             }
             else
