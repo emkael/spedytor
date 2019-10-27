@@ -194,7 +194,7 @@ namespace spedytor
                 bTimer.Image = spedytor.Properties.Resources.stop;
                 bTimer.Text = "Zatrzymaj";
                 this.setControlState(false, bTimer);
-                tInterval_Tick(null, null);
+                tInterval_Tick(this.bTimer, null);
             }
             else
             {
@@ -222,7 +222,7 @@ namespace spedytor
                     string filePath = Path.Combine(this.repeatFilePath, dbName + DateTime.Now.ToString("-yyyyMMdd-HHmmss") + ".sql");
                     threadList.Add(this.invokeSave(filePath, dbName, false));
                 }
-                if (e == null) // programmatic invoke, not actual button click
+                if (sender == null) // programmatic invoke, not actual button click
                 {
                     foreach (Thread t in threadList)
                     {
