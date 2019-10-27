@@ -1,11 +1,11 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="spedytor" GeneratedClassName="OptionSettings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="spedytor.Properties" GeneratedClassName="OptionSettings">
   <Profiles />
   <Settings>
-    <Setting Name="dbNames" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="DB_NAMES" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="send" Type="System.Boolean" Scope="User">
+    <Setting Name="SEND_FLAG" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

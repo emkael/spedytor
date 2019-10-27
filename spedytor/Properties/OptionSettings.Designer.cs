@@ -25,24 +25,24 @@ namespace spedytor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection dbNames {
+        public global::System.Collections.Specialized.StringCollection DB_NAMES {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["dbNames"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["DB_NAMES"]));
             }
             set {
-                this["dbNames"] = value;
+                this["DB_NAMES"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool send {
+        public bool SEND_FLAG {
             get {
-                return ((bool)(this["send"]));
+                return ((bool)(this["SEND_FLAG"]));
             }
             set {
-                this["send"] = value;
+                this["SEND_FLAG"] = value;
             }
         }
     }

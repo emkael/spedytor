@@ -387,19 +387,19 @@ namespace spedytor
 
         private void restoreSettings()
         {
-            this.setSelectedDBs(Properties.OptionSettings.Default.dbNames.Cast<string>().ToList());
-            this.cSend.Checked = Properties.OptionSettings.Default.send;
+            this.setSelectedDBs(Properties.OptionSettings.Default.DB_NAMES.Cast<string>().ToList());
+            this.cSend.Checked = Properties.OptionSettings.Default.SEND_FLAG;
         }
 
         private void saveSettings()
         {
-            Properties.OptionSettings.Default.send = this.cSend.Checked;
-            if (Properties.OptionSettings.Default.dbNames == null)
+            Properties.OptionSettings.Default.SEND_FLAG = this.cSend.Checked;
+            if (Properties.OptionSettings.Default.DB_NAMES == null)
             {
-                Properties.OptionSettings.Default.dbNames = new System.Collections.Specialized.StringCollection();
+                Properties.OptionSettings.Default.DB_NAMES = new System.Collections.Specialized.StringCollection();
             }
-            Properties.OptionSettings.Default.dbNames.Clear();
-            Properties.OptionSettings.Default.dbNames.AddRange(this.selectedDBs.ToArray());
+            Properties.OptionSettings.Default.DB_NAMES.Clear();
+            Properties.OptionSettings.Default.DB_NAMES.AddRange(this.selectedDBs.ToArray());
             Properties.OptionSettings.Default.Save();
         }
 
