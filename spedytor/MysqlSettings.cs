@@ -63,7 +63,7 @@ namespace spedytor
             {
                 Properties.Settings.Default.CONFIGURED = true;
                 Properties.Settings.Default.Save();
-                Close();
+                Dispose();
             }
             else
             {

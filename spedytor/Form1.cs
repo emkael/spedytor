@@ -44,10 +44,17 @@ namespace spedytor
             this.Dispose();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Shown(object sender, EventArgs e)
         {
-            if (!MySQL.getConfigured()) (new MysqlSettings()).ShowDialog();
-            if (!MySQL.getConfigured()) this.Dispose();
+            if (!MySQL.getConfigured())
+            {
+                (new MysqlSettings()).ShowDialog();
+            }
+            if (!MySQL.getConfigured())
+            {
+                this.Dispose();
+                return;
+            }
             this.restoreSettings();
             this.refreshDatabaseList();
             this.checkS3Options();
@@ -387,7 +394,10 @@ namespace spedytor
 
         private void restoreSettings()
         {
-            this.setSelectedDBs(Properties.OptionSettings.Default.DB_NAMES.Cast<string>().ToList());
+            if (Properties.OptionSettings.Default.DB_NAMES != null)
+            {
+                this.setSelectedDBs(Properties.OptionSettings.Default.DB_NAMES.Cast<string>().ToList());
+            }
             this.cSend.Checked = Properties.OptionSettings.Default.SEND_FLAG;
             this.nInterval.Value = Properties.OptionSettings.Default.RUN_INTERVAL;
         }
